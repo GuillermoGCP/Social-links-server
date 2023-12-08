@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { selectUserByEmail } from "../../models/users/index.js";
 import generateError from "../../utils/generateError.js";
+import dotenv from "dotenv/config.js";
 
 // Login
 const login = async (req, res, next) => {
@@ -27,7 +28,7 @@ const login = async (req, res, next) => {
     res.send({ message: "Loggeado correctamente", data: { token } });
   } catch (error) {
     // next(error);
-    console.error("Te jodes!!");
+    console.error(error.message);
   }
 };
 

@@ -3,21 +3,17 @@ import "dotenv/config";
 import useDb from "./db/useDb.js";
 import cors from "cors";
 import bcrypt from "bcrypt";
+import { login } from "./controllers/users/index.js";
+import pool from "./db/getPool.js";
 import {
   validatedName,
   validatedEmail,
   validatedPass,
 } from "../src/utils/validation.js";
 const { PORT } = process.env;
-// --------------------------------------
-import login from "./controllers/users/index.js";
-import pool from "./db/getPool.js";
-// --------------------------------------
 
-const { PORT } = process.env;
 const app = express();
 app.use(express.json());
-
 
 // Rutas de usuarios ---------------------
 app.post("/login", login);
