@@ -10,6 +10,9 @@ import {
   validatedEmail,
   validatedPass,
 } from "../src/utils/validation.js";
+import {manageError, notFound} from "./middlewares/index.js";
+import generateError from "./utils/generateError.js";
+
 const { PORT } = process.env;
 
 const app = express();
@@ -53,7 +56,7 @@ app.post("/register", async (req, res, next) => {
     );
 
     if (checkEmail) {
-      console.error("Ya existe un usuario con este email", 400);
+      generateError("Ya existe un usuario con este email", 400);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -68,8 +71,8 @@ app.post("/register", async (req, res, next) => {
       data: { id: insertId, name, email },
     });
   } catch (error) {
-    // next(error);
-    console.error(error);
+        next(error);
+   
   }
 });
 
@@ -88,6 +91,10 @@ app.post("/links", async (req, res) => {
     },
   });
 });
+
+//Middlewares
+app.use(notFound);
+app.use(manageError);
 
 //Server:
 app.listen(PORT, () => {
