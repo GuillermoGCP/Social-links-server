@@ -1,15 +1,27 @@
 import express from "express";
 import "dotenv/config";
-import bcrypt from "bcrypt";
-import pool from "../src/db/getPool.js";
 import useDb from "./db/useDb.js";
+import cors from "cors";
+import bcrypt from "bcrypt";
 import {
   validatedName,
   validatedEmail,
   validatedPass,
 } from "../src/utils/validation.js";
 const { PORT } = process.env;
+// --------------------------------------
+import login from "./controllers/users/index.js";
+import pool from "./db/getPool.js";
+// --------------------------------------
+
+const { PORT } = process.env;
 const app = express();
+app.use(express.json());
+
+
+// Rutas de usuarios ---------------------
+app.post("/login", login);
+// ---------------------------------------
 
 //Middleware a nivel de aplicación, para manejar los json:
 app.use(express.json());
