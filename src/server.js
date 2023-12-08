@@ -6,6 +6,7 @@ import cors from "cors";
 //Importaciones propias:
 import { login, register } from "./controllers/users/index.js";
 import pool from "./db/getPool.js";
+import {manageError, notFound} from "./middlewares/index.js";
 
 //Middlewares de aplicación:
 const app = express();
@@ -15,6 +16,9 @@ app.use(cors());
 // Rutas:
 app.post("/login", login);
 app.post("/register", register);
+
+//Middleware a nivel de aplicación, para manejar los json:
+app.use(express.json());
 
 //Ruta para crear un link:
 app.post("/links", async (req, res) => {
@@ -31,6 +35,10 @@ app.post("/links", async (req, res) => {
     },
   });
 });
+
+//Middlewares
+app.use(notFound);
+app.use(manageError);
 
 //Server:
 app.listen(process.env.PORT, () => {

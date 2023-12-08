@@ -50,7 +50,7 @@ const createDb= async()=>{
             
         console.log('Tablas de base de datos creada exitosamente');
     } catch (error) {
-        console.error(error.message)
+        next(error);
     } 
     
 };
