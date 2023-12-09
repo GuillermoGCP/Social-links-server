@@ -5,6 +5,7 @@ import cors from "cors";
 
 //Importaciones propias:
 import { login, register } from "./controllers/users/index.js";
+import { seeAllLinksController } from "./controllers/links/index.js";
 import { manageError, notFound, validateAuth } from "./middlewares/index.js";
 import { createLinkController } from "./controllers/links/index.js";
 
@@ -19,6 +20,8 @@ app.post("/register", register);
 
 //Ruta para crear un link:
 app.post("/links", validateAuth, createLinkController);
+//Ruta para ver todos los links:
+app.post("/links/all", validateAuth, seeAllLinksController);
 
 //Middlewares
 app.use(notFound);
