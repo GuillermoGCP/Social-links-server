@@ -27,8 +27,7 @@ const login = async (req, res, next) => {
 
     res.send({ message: "Loggeado correctamente", data: { token } });
   } catch (error) {
-        next(error);
-    
+    next(error);
   }
 };
 
