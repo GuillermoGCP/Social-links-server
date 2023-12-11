@@ -11,7 +11,8 @@ import {
   previousLinksController,
 } from "./controllers/links/index.js";
 import { manageError, notFound, validateAuth } from "./middlewares/index.js";
-import { createLinkController } from "./controllers/links/index.js";
+import { createLinkController, deleteLinkController } from "./controllers/links/index.js";
+
 
 //Middlewares de aplicación:
 const app = express();
@@ -31,6 +32,8 @@ app.get("/links/today", validateAuth, seeLinksTodayController);
 app.get("/links/previous", validateAuth, previousLinksController);
 //Ruta para ver todos los links:
 app.get("/links/all", validateAuth, seeAllLinksController);
+// Ruta para borrar link
+app.delete("/links/:linkId", validateAuth, deleteLinkController);
 
 //Middlewares
 app.use(notFound);
