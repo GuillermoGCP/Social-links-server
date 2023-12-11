@@ -2,7 +2,7 @@ import createLink from "./createLink.js";
 import seeAllLinks from "./seeAllLinks.js";
 import seeLinksToday from "./linksToday.js";
 import previousLinks from "./previousLinks.js";
-import selectLinkById from "./linkid.js";
+import selectLinkById from "./selectLinkById.js";
 import deleteLink from "./deletelink.js";
 
 export {
