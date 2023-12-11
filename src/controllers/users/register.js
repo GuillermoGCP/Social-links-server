@@ -13,17 +13,20 @@ const register = async (req, res, next) => {
     // Validar el nombre
     const { error: nameError } = validatedName.validate(name);
     if (nameError) {
-      return res.status(400).send(nameError.details[0].message);
+      nameError.message = nameError.details[0].message;
+      throw nameError;
     }
     // Validar el correo electrónico
     const { error: emailError } = validatedEmail.validate(email);
     if (emailError) {
-      return res.status(400).send(emailError.details[0].message);
+      emailError.message = emailError.details[0].message;
+      throw emailError;
     }
     // Validar la contraseña
     const { error: passwordError } = validatedPass.validate(password);
     if (passwordError) {
-      return res.status(400).send(passwordError.details[0].message);
+      passwordError.message = passwordError.details[0].message;
+      throw passwordError;
     }
     //**********************************/
     const checkEmail = await selectUserByEmail(email);
