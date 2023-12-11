@@ -1,37 +1,47 @@
+import { selectUserByEmail, createUser } from "../../models/users/index.js";
 import bcrypt from "bcrypt";
-
-// Register
+import {
+  validatedName,
+  validatedEmail,
+  validatedPass,
+} from "../../utils/validation.js";
 const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
-    // Validar con joi...??
+    // Validamos con Joi...
+    // Validar el nombre
+    const { error: nameError } = validatedName.validate(name);
+    if (nameError) {
+      return res.status(400).send(nameError.details[0].message);
+    }
+    // Validar el correo electrónico
+    const { error: emailError } = validatedEmail.validate(email);
+    if (emailError) {
+      return res.status(400).send(emailError.details[0].message);
+    }
+    // Validar la contraseña
+    const { error: passwordError } = validatedPass.validate(password);
+    if (passwordError) {
+      return res.status(400).send(passwordError.details[0].message);
+    }
+    //**********************************/
+    const checkEmail = await selectUserByEmail(email);
 
-    const userWithSameEmail = await selectUserByEmail(email);
-
-    if (userWithSameEmail) {
-      // generar error
-      return res
-        .status(400)
-        .send("Ya existe un usuario con este mail, listo!!!", 400);
+    if (checkEmail) {
+      console.error("Ya existe un usuario con este email", 400);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const insertId = await insertser({
-      name,
-      email,
-      hashedPassword,
-    });
+    const insertId = await createUser(name, email, hashedPassword);
 
     res.status(201).send({
-      message: "Registro completado con éxito Máquina!",
-      data: { id: insertId, nombre: name, email },
+      message: "Registro completado con éxito",
+      data: { id: insertId, name, email },
     });
   } catch (error) {
-    // next(error);
-    console.error("La cagaste Burt Lancaster!");
+    next(error);
   }
 };
-
 export default register;
