@@ -4,6 +4,7 @@ import seeLinksTodayController from "./seeLinksTodayController.js";
 import previousLinksController from "./previousLinksController.js";
 import deleteLinkController from "./deleteLinkController.js";
 import linkIdController from "./linkById.js";
+import voteLinkController from "./voteLinkController.js";
 
 export {
   createLinkController,
@@ -11,5 +12,6 @@ export {
   seeLinksTodayController,
   previousLinksController,
   deleteLinkController,
-  linkIdController
+  linkIdController,
+  voteLinkController
 };

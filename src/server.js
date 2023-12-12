@@ -12,6 +12,7 @@ import {
   createLinkController,
   deleteLinkController,
   linkIdController,
+  voteLinkController
 } from "./controllers/links/index.js";
 import { manageError, notFound, validateAuth } from "./middlewares/index.js";
 
@@ -37,6 +38,8 @@ app.get("/links/all", validateAuth, seeAllLinksController);
 app.delete("/links/:linkId", validateAuth, deleteLinkController);
 //Ruta para ver links con id
 app.get("/links/:linkId", validateAuth, linkIdController);
+//Ruta para votar un link:
+app.post("/links/:linkId", validateAuth, voteLinkController);
 
 //Middlewares
 app.use(notFound);

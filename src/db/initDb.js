@@ -40,7 +40,7 @@ const createDb= async()=>{
             id INT AUTO_INCREMENT PRIMARY KEY,
             userId INT NOT NULL,
             linkId INT NOT NULL,
-            rate INT NOT NULL,
+            rating INT NOT NULL,
             FOREIGN KEY (userId) REFERENCES users(id),
             FOREIGN KEY (linkId) REFERENCES links(id),
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
