@@ -14,5 +14,8 @@ const schema = Joi.object({
   description: Joi.string().required(),
 });
 
+//Validar voto de link:
+const validatedRating= Joi.number().integer().min(0).max(10).required();
+
 //Exporto las variables:
-export { validatedName, validatedEmail, validatedPass, schema };
+export { validatedName, validatedEmail, validatedPass, schema, validatedRating };
