@@ -2,9 +2,15 @@
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
+import multer from "multer";
 
 //Importaciones propias:
-import { login, register } from "./controllers/users/index.js";
+
+import {
+  editProfileController,
+  login,
+  register,
+} from "./controllers/users/index.js";
 import {
   seeAllLinksController,
   seeLinksTodayController,
@@ -12,7 +18,7 @@ import {
   createLinkController,
   deleteLinkController,
   linkIdController,
-  voteLinkController
+  voteLinkController,
 } from "./controllers/links/index.js";
 import { manageError, notFound, validateAuth } from "./middlewares/index.js";
 
@@ -24,6 +30,9 @@ app.use(cors());
 // Rutas:
 app.post("/login", login);
 app.post("/register", register);
+
+//Ruta de Editar Perfil
+app.put("/profile", validateAuth, editProfileController);
 
 //Ruta para crear un link:
 app.post("/links", validateAuth, createLinkController);
