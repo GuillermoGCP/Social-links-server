@@ -1,5 +1,7 @@
 import { selectUserByEmail, createUser } from "../../models/users/index.js";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv/config";
+import { generateError, sendMailUtil } from "../../utils/index.js";
 import {
   validatedName,
   validatedEmail,
@@ -32,12 +34,18 @@ const register = async (req, res, next) => {
     const checkEmail = await selectUserByEmail(email);
 
     if (checkEmail) {
-      console.error("Ya existe un usuario con este email", 400);
+      generateError("Ya existe un usuario con este email", 400);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const insertId = await createUser(name, email, hashedPassword);
+
+    // Hagamos el envío del correo
+    const emailSubject = "Registro completado con éxito";
+    const bodyMail = `¡Bienvenido/a ${name}! Gracias por registrarte`;
+
+    await sendMailUtil(email, emailSubject, bodyMail);
 
     res.status(201).send({
       message: "Registro completado con éxito",
