@@ -1,3 +1,4 @@
 import generateError from "./generateError.js";
+import sendMailUtil from "./sendMailUtil.js";
 
-export { generateError };
+export { generateError, sendMailUtil };
