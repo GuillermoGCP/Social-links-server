@@ -5,7 +5,7 @@ import cors from "cors";
 import multer from "multer";
 
 //Importaciones propias:
-
+import { storage } from "./utils/index.js";
 import {
   editProfileController,
   login,
@@ -23,6 +23,7 @@ import {
 import { manageError, notFound, validateAuth } from "./middlewares/index.js";
 
 //Middlewares de aplicación:
+const upload = multer({ storage: storage });
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -32,7 +33,12 @@ app.post("/login", login);
 app.post("/register", register);
 
 //Ruta de Editar Perfil
-app.put("/profile", validateAuth, editProfileController);
+app.put(
+  "/profile",
+  validateAuth,
+  upload.single("profilePicture"),
+  editProfileController
+);
 
 //Ruta para crear un link:
 app.post("/links", validateAuth, createLinkController);

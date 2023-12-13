@@ -1,28 +1,27 @@
 import pool from "./getPool.js";
 import useDb from "./useDb.js";
 
+const createDb = async () => {
+  try {
+    await pool.query(`CREATE DATABASE IF NOT EXISTS ${process.env.NAME_DB};`);
 
-const createDb= async()=>{
-    try {
-        await pool.query(`CREATE DATABASE IF NOT EXISTS ${process.env.NAME_DB};`);
+    await useDb();
 
-        await useDb();
+    await pool.query(`DROP TABLE IF EXISTS users,links,userLink;`);
 
-        await pool.query(`DROP TABLE IF EXISTS users,links,userLink;`);
+    await pool.query(`
+            CREATE TABLE users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(64)NOT NULL,
+                email VARCHAR(100) UNIQUE NOT NULL,
+                password VARCHAR(64) NOT NULL,
+                profilePicture VARCHAR(150),
+                biography VARCHAR(255),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
+            );`);
 
-               
-        await pool.query(`
-        CREATE TABLE users (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(64)NOT NULL,
-            email VARCHAR(100) UNIQUE NOT NULL,
-            password VARCHAR(64) NOT NULL,
-            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-            modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
-        );
-        `);
-
-        await pool.query(`
+    await pool.query(`
         CREATE TABLE links (
             id INT AUTO_INCREMENT PRIMARY KEY,
             url VARCHAR(255) NOT NULL,
@@ -35,7 +34,7 @@ const createDb= async()=>{
         );
         `);
 
-        await pool.query(`
+    await pool.query(`
         CREATE TABLE userLink (
             id INT AUTO_INCREMENT PRIMARY KEY,
             userId INT NOT NULL,
@@ -47,12 +46,11 @@ const createDb= async()=>{
             modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
         );
         `);
-            
-        console.log('Tablas de base de datos creada exitosamente');
-    } catch (error) {
-        next(error);
-    } 
-    
+
+    console.log("Tablas de base de datos creada exitosamente");
+  } catch (error) {
+    next(error);
+  }
 };
 
-createDb()
+createDb();
