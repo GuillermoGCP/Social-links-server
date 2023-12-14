@@ -15,8 +15,8 @@ const createDb = async () => {
                 name VARCHAR(64)NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
                 password VARCHAR(64) NOT NULL,
-                profilePicture VARCHAR(150),
-                biography VARCHAR(255),
+                profilePicture VARCHAR(150) DEFAULT './src/uploads/imagenPredeterminada.jpg',
+                biography VARCHAR(255) DEFAULT 'Sin biografía',
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
             );`);
@@ -49,7 +49,7 @@ const createDb = async () => {
 
     console.log("Tablas de base de datos creada exitosamente");
   } catch (error) {
-    next(error);
+    throw error;
   }
 };
 

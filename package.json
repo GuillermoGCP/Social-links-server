@@ -6,12 +6,15 @@
   "main": "server.js",
   "scripts": {
     "test": "nodemon ./src/server.js",
-    "db": "nodemon ./src/db/initDb.js"
+    "db": "nodemon ./src/db/initDb.js",
+    "deleteDb": "node ./src/db/deleteDb.js",
+    "initDb": "node ./src/db/initDb.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

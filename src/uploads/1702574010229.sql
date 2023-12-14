@@ -1,0 +1,50 @@
+CREATE DATABASE diary_travel;
+USE diary_travel;
+
+DROP TABLE IF EXISTS photos;
+DROP TABLE IF EXISTS votes;
+DROP TABLE IF EXISTS entries;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(512) NOT NULL,
+    name VARCHAR(100),
+    avatar VARCHAR(100),
+    active BOOLEAN DEFAULT false,
+    role ENUM("admin", "normal") DEFAULT "normal" NOT NULL,
+    regCode CHAR(36),
+    deleted BOOLEAN DEFAULT false,
+    lastAuthUpdate DATETIME,
+    recoverCode CHAR(36)
+);
+
+CREATE TABLE entries (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    place VARCHAR(100) NOT NULL,
+    description TEXT,
+    user_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE photos (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    photo VARCHAR(100) NOT NULL,
+    entry_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (entry_id) REFERENCES entries(id)
+);
+
+CREATE TABLE votes (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    vote TINYINT NOT NULL CHECK (vote IN (1,2,3,4,5)),
+    user_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    entry_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (entry_id) REFERENCES entries(id),
+    UNIQUE (user_id, entry_id)
+);
