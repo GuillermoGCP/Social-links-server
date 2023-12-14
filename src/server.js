@@ -4,15 +4,17 @@ import "dotenv/config";
 import cors from "cors";
 
 //Importaciones propias:
-
 import { manageError, notFound } from "./middlewares/index.js";
 import { linkRouters, userRouters } from "./routes/index.js";
 
-//Middlewares de aplicación:
+//Express:
 const app = express();
+
+//Middlewares de aplicación:
 app.use(express.json());
 app.use(cors());
 
+//Rutas:
 app.use(userRouters);
 app.use(linkRouters);
 

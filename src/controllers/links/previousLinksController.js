@@ -3,6 +3,15 @@ import { previousLinks } from "../../models/links/index.js";
 const previousLinksController = async (req, res, next) => {
   try {
     const links = await previousLinks();
+    if (!links) {
+      res.send({
+        status: "ok",
+        data: {
+          message: "No hay links compartidos",
+        },
+      });
+      return;
+    }
     res.send({
       status: "ok",
       data: {
