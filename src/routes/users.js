@@ -4,6 +4,7 @@ import { storage, limits } from "../utils/index.js";
 
 import {
   editProfileController,
+  getProfile,
   login,
   register,
 } from "../controllers/users/index.js";
@@ -25,5 +26,8 @@ router.put(
   upload.single("profilePicture"),
   editProfileController
 );
+
+//Ruta visualizar perfil y links propios
+router.get("/profile", validateAuth,getProfile)
 
 export default router;

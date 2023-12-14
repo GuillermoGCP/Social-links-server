@@ -5,6 +5,7 @@ import previousLinks from "./previousLinks.js";
 import selectLinkById from "./selectLinkById.js";
 import deleteLink from "./deletelink.js";
 import voteLink from "../ratings/voteLink.js";
+import getOwnLinks from "./getOwnLinks.js";
 
 
 export {
@@ -14,5 +15,6 @@ export {
   previousLinks,
   selectLinkById,
   deleteLink,
-  voteLink  
+  voteLink,
+  getOwnLinks 
 };

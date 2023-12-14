@@ -1,5 +1,5 @@
 import Joi from "joi";
-import happyJoi from "@hapi/joi";
+
 
 // Validar el nombre
 const validatedName = Joi.string().min(3).max(30).required();
