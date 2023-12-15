@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import fs from "fs/promises";
 import { selectUserById } from "../../models/users/index.js";
 import { editProfile } from "../../models/users/index.js";
 import {
@@ -11,16 +12,26 @@ import {
 const patchProfileController = async (req, res, next) => {
   try {
     const patataId = req.auth.id;
-
     //Modificamos datos con patch:
     const userData = await selectUserById(patataId);
     const userToUpdate = {
       ...userData,
       ...req.body,
     };
-    console.log(req.file);
-    const { name, email, password, profilePicture, biography } = userToUpdate;
-    //---------------------------
+
+    let { name, email, password, profilePicture, biography } = userToUpdate;
+
+    //Si envías una nueva foto, te borra la anterior de la carpeta uploads:
+    if (req.file) {
+      if (
+        profilePicture &&
+        profilePicture !== "/uploads/imagenPredeterminada.jpg"
+      ) {
+        await fs.unlink(`./src/uploads/${profilePicture}`);
+      }
+      profilePicture = req.file.filename;
+    }
+
     //Validación con Joi:
     //Validar nombre:
     const { error: nameError } = validatedName.validate(name);
@@ -47,9 +58,7 @@ const patchProfileController = async (req, res, next) => {
       bioError.message = bioError.details[0].message;
       throw bioError;
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
     await editProfile(
       name,
       email,

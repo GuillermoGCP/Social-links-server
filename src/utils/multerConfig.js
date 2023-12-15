@@ -10,8 +10,19 @@ const storage = multer.diskStorage({
   },
 });
 
+//Validar que sea un archivo de imagen:
+const fileFilter = (req, file, callback) => {
+  // Verificar el tipo de archivo permitido
+  const allowedMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    callback(null, true); // Aceptar el archivo
+  } else {
+    callback(new Error("Tipo de archivo no permitido"), false); // Rechazar el archivo
+  }
+};
+//Validar el tamaño de imagen:
 const limits = {
   fileSize: 3 * 1024 * 1024, // Maximo archivos de 3 megabytes.
 };
 
-export { storage, limits };
+export { storage, limits, fileFilter };
