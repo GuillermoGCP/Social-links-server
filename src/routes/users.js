@@ -7,6 +7,7 @@ import {
   getProfile,
   login,
   register,
+  patchProfileController,
 } from "../controllers/users/index.js";
 
 import { validateAuth } from "../middlewares/index.js";
@@ -19,15 +20,17 @@ const upload = multer({ storage: storage, limits });
 router.post("/login", login);
 router.post("/register", register);
 
-//Ruta de Editar Perfil
+//Ruta para Editar todo el Perfil (con foto)
 router.put(
   "/profile",
   validateAuth,
   upload.single("profilePicture"),
   editProfileController
 );
+//Ruta para Editar partes concretas del perfil (sin foto):
+router.patch("/profile/patch", validateAuth, patchProfileController);
 
 //Ruta visualizar perfil y links propios
-router.get("/profile", validateAuth,getProfile)
+router.get("/profile", validateAuth, getProfile);
 
 export default router;
