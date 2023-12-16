@@ -21,7 +21,7 @@ const patchProfileController = async (req, res, next) => {
 
     let { name, email, password, profilePicture, biography } = userToUpdate;
 
-    //Si envías una nueva foto, te borra la anterior de la carpeta uploads:
+    //Si envías una nueva foto, se borra la anterior de la carpeta uploads:
     if (req.file) {
       if (
         profilePicture &&

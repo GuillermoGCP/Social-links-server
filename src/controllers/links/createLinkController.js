@@ -9,10 +9,7 @@ const createLinkController = async (req, res, next) => {
     const loggedUserId = req.auth.id;
     const { url, title, description } = req.body;
 
-    //---------------------------
     //Validación con Joi:
-    // Validar los datos del cuerpo de la solicitud
-
     const { error } = schema.validate(req.body);
     if (error) {
       error.message = error.details[0].message;
@@ -22,6 +19,7 @@ const createLinkController = async (req, res, next) => {
     const insertId = await createLink(url, title, description, loggedUserId);
 
     //*************************************/
+    //Enviar email al usuario:
     const user = await selectUserById(loggedUserId);
     const email = user.email;
     const name = user.name;
