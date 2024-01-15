@@ -16,12 +16,19 @@ const router = express.Router();
 //Ruta para crear un link:
 router.post("/links", validateAuth, createLinkController);
 
-//Ruta para ver los links de hoy:
-router.get("/links/today", validateAuth, seeLinksTodayController);
-//Ruta para ver los links anteriores a hoy:
-router.get("/links/previous", validateAuth, previousLinksController);
-//Ruta para ver todos los links:
-router.get("/links/all", validateAuth, seeAllLinksController);
+//Rutas para ver los links:
+router.get("/links", validateAuth, (req, res, next) => {
+  const { today, previous } = req.query;
+  //Las querys serán: /links?today=true, o /links?previous=true
+  if (today === "true") {
+    seeLinksTodayController(req, res, next);
+  } else if (previous === "true") {
+    previousLinksController(req, res, next);
+  } else {
+    seeAllLinksController(req, res, next);
+  }
+});
+
 // Ruta para borrar link
 router.delete("/links/:linkId", validateAuth, deleteLinkController);
 //Ruta para ver links con id
