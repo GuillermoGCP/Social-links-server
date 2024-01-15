@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import path from "path";
 import fs from "fs/promises";
 import Joi from "joi";
 import { selectUserById } from "../../models/users/index.js";
@@ -13,18 +14,20 @@ const patchProfileController = async (req, res, next) => {
     const userToUpdate = {
       ...userData,
       ...req.body,
+      ...req.file,
     };
 
     let { name, email, password, profilePicture, biography } = userToUpdate;
 
     //Si envías una nueva foto, se borra la anterior de la carpeta uploads:
     if (req.file) {
-      if (
-        profilePicture &&
-        profilePicture !== "/uploads/imagenPredeterminada.jpg"
-      ) {
-        await fs.unlink(`./src/uploads/${profilePicture}`);
+      const defaultImagePath = path.join("uploads", "imagenPredeterminada.jpg");
+      const currentImagePath = path.join("src", "uploads", profilePicture);
+
+      if (profilePicture && currentImagePath !== defaultImagePath) {
+        await fs.unlink(currentImagePath);
       }
+
       profilePicture = req.file.filename;
     }
 
