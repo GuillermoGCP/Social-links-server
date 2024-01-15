@@ -4,25 +4,23 @@ import jwt from "jsonwebtoken";
 import { selectUserByEmail } from "../../models/users/index.js";
 import generateError from "../../utils/generateError.js";
 import dotenv from "dotenv/config.js";
-import { validatedEmail, validatedPass } from "../../utils/validation.js";
+import { validationSchemaLogin } from "../../utils/validation.js";
 
-// Login
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    const validationObject = {
+      email,
+      password,
+    };
 
-    //Validar con Joi:
-    //Validar el correo electrónico
-    const { error: emailError } = validatedEmail.validate(email);
-    if (emailError) {
-      emailError.message = emailError.details[0].message;
-      throw emailError;
-    }
-    // Validar la contraseña
-    const { error: passwordError } = validatedPass.validate(password);
-    if (passwordError) {
-      passwordError.message = passwordError.details[0].message;
-      throw passwordError;
+    const { error } = Joi.object(validationSchemaLogin).validate(
+      validationObject
+    );
+
+    if (error) {
+      error.message = error.details[0].message;
+      throw error;
     }
 
     const userDb = await selectUserByEmail(email);

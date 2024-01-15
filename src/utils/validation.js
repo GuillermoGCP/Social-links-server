@@ -1,12 +1,16 @@
 import Joi from "joi";
 
-// Validar el nombre
-const validatedName = Joi.string().min(3).max(30).required();
-// Esquema de validación para el correo electrónico
-const validatedEmail = Joi.string().email().required();
-// Esquema de validación para la contraseña
-const validatedPass = Joi.string().min(6).required();
-const validatedBio = Joi.string().min(10).max(255);
+const validationSchemaRegister = {
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  validatedBio: Joi.string().min(10).max(255),
+};
+
+const validationSchemaLogin = {
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+};
 
 //Esquema para links:
 const schema = Joi.object({
@@ -20,10 +24,8 @@ const validatedRating = Joi.number().integer().min(0).max(10).required();
 
 //Exporto las variables:
 export {
-  validatedName,
-  validatedEmail,
-  validatedPass,
   schema,
   validatedRating,
-  validatedBio,
+  validationSchemaRegister,
+  validationSchemaLogin,
 };
