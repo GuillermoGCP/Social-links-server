@@ -1,19 +1,15 @@
 import bcrypt from "bcrypt";
 import fs from "fs/promises";
+import Joi from "joi";
 import { selectUserById } from "../../models/users/index.js";
 import { editProfile } from "../../models/users/index.js";
-import {
-  validatedBio,
-  validatedName,
-  validatedEmail,
-  validatedPass,
-} from "../../utils/validation.js";
+import { validationSchemaRegister } from "../../utils/validation.js";
 
 const patchProfileController = async (req, res, next) => {
   try {
-    const patataId = req.auth.id;
+    const userId = req.auth.id;
     //Modificamos datos con patch:
-    const userData = await selectUserById(patataId);
+    const userData = await selectUserById(userId);
     const userToUpdate = {
       ...userData,
       ...req.body,
@@ -33,30 +29,19 @@ const patchProfileController = async (req, res, next) => {
     }
 
     //Validación con Joi:
-    //Validar nombre:
-    const { error: nameError } = validatedName.validate(name);
-    if (nameError) {
-      nameError.message = nameError.details[0].message;
-      throw nameError;
-    }
-    // Validar el correo electrónico
-    const { error: emailError } = validatedEmail.validate(email);
-    if (emailError) {
-      emailError.message = emailError.details[0].message;
-      throw emailError;
-    }
-    // Validar la contraseña
-    const { error: passwordError } = validatedPass.validate(password);
-    if (passwordError) {
-      passwordError.message = passwordError.details[0].message;
-      throw passwordError;
-    }
+    const validationObject = {
+      name,
+      email,
+      password,
+    };
+    // Validamos con Joi...
+    const { error } = Joi.object(validationSchemaRegister).validate(
+      validationObject
+    );
 
-    //Validar bio:
-    const { error: bioError } = validatedBio.validate(biography);
-    if (bioError) {
-      bioError.message = bioError.details[0].message;
-      throw bioError;
+    if (error) {
+      error.message = error.details[0].message;
+      throw error;
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     await editProfile(
@@ -65,7 +50,7 @@ const patchProfileController = async (req, res, next) => {
       hashedPassword,
       profilePicture,
       biography,
-      patataId
+      userId
     );
     res.send({
       status: "Ok",
