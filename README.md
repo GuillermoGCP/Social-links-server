@@ -23,9 +23,11 @@
     ENLACES:
     /links (post) para crear un link y compartirlo.
         url, title, description.
-    /links/today (get) para ver los links publicados en el día.
-    /links/previous (get) para ver los enlaces de días anteriores.
-    /links/all (get) para ver todos los enlaces publicados.
+
+    /links para ver todos los links publicados, accesibles con los
+    query params siguientes: /links?today=true para ver los publicados
+    en el mismo día; /links?previous=true para ver los anteriores.
+
     /links/:linkId (get) para ver un link concreto a través de su id.
     /links/:linkId (post) para votar un link.
         rating
