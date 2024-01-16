@@ -5,7 +5,7 @@ const seeLinksToday = async () => {
   const todayDate = new Date();
   await useDb();
   const [links] = await pool.query(
-    "SELECT * FROM links WHERE DATE(createdAt) = DATE(?)",
+    "SELECT l.*, u.name, u.profilePicture FROM links l JOIN users u ON l.ownerId = u.id WHERE DATE(l.createdAt) = DATE(?);",
     [todayDate]
   );
   console.log(links);
