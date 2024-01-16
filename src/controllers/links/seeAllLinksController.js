@@ -1,7 +1,8 @@
 import { seeAllLinks } from "../../models/links/index.js";
 const seeAllLinksController = async (req, res, next) => {
   try {
-    const links = await seeAllLinks();
+    const links = await seeAllLinks(req.auth?.id);
+
     if (!links) {
       res.send({
         status: "ok",
