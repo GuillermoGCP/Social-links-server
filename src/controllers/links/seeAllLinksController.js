@@ -16,7 +16,7 @@ const seeAllLinksController = async (req, res, next) => {
       status: "ok",
       data: {
         message: "Estos son todos los enlaces publicados",
-        links,
+        links: links,
       },
     });
     console.log(links);
