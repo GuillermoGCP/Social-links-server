@@ -2,7 +2,7 @@
   "type": "module",
   "name": "proyecto-links",
   "version": "1.0.0",
-  "description": "",
+  "description": "API para compartir enlaces web y votar los de otros usuarios.     Los usuarios solo podrán registrarse y acceder. No hay contenido accesible públicamente.",
   "main": "server.js",
   "scripts": {
     "test": "nodemon ./src/server.js",
