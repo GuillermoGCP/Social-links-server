@@ -30,7 +30,8 @@ const patchProfileController = async (req, res, next) => {
 
           await fs.unlink(currentImagePath);
         } catch (error) {
-          next(error);
+          // next(error);
+          console.log("Aquí");
         }
       }
 
