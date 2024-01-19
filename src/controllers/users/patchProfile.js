@@ -25,7 +25,13 @@ const patchProfileController = async (req, res, next) => {
       const currentImagePath = path.join("src", "uploads", profilePicture);
 
       if (profilePicture && currentImagePath !== defaultImagePath) {
-        await fs.unlink(currentImagePath);
+        try {
+          await fs.promises.access(currentImagePath);
+
+          await fs.unlink(currentImagePath);
+        } catch (error) {
+          next(error);
+        }
       }
 
       profilePicture = req.file.filename;
