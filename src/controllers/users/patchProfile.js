@@ -53,7 +53,11 @@ const patchProfileController = async (req, res, next) => {
       error.message = error.details[0].message;
       throw error;
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    let hashedPassword = password;
+    req.body.password
+      ? (hashedPassword = await bcrypt.hash(password, 10))
+      : (hashedPassword = password);
+
     await editProfile(
       name,
       email,
