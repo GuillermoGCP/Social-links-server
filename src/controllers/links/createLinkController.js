@@ -1,6 +1,6 @@
 import { selectUserById } from "../../models/users/index.js";
 import { sendMailUtil } from "../../utils/index.js";
-import { createLink } from "../../models/links/index.js";
+import { createLink, selectLinkById } from "../../models/links/index.js";
 import Joi from "joi";
 import { schema } from "../../utils/validation.js";
 
@@ -27,18 +27,11 @@ const createLinkController = async (req, res, next) => {
     const bodyMail = `¡${name}, has compartido un enlace en nuestra plataforma de enlaces. Ahora vota enlaces de otros usuarios y espera votaciones en el tuyo`;
     await sendMailUtil(email, emailSubject, bodyMail);
     //*************************************/
-
+    const createdLink = await selectLinkById(insertId);
     res.send({
       status: "ok",
-      data: {
-        id: insertId,
-        message: "Has compartido un enlace!👌",
-        data: {
-          url,
-          title,
-          description,
-        },
-      },
+      message: "Has compartido un enlace!👌",
+      data: createdLink,
     });
   } catch (error) {
     next(error);
