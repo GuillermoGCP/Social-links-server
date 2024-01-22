@@ -10,10 +10,10 @@ const editProfile = async (
   id
 ) => {
   await useDb();
-  const fullProfilePicturePath = `/uploads/${profilePicture}`;
+
   pool.query(
     "UPDATE users SET name = ?, email = ?, password = ?, profilePicture = ?, biography = ? WHERE id = ?",
-    [name, email, password, fullProfilePicturePath, biography, id]
+    [name, email, password, profilePicture, biography, id]
   );
 };
 

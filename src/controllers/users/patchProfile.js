@@ -21,18 +21,24 @@ const patchProfileController = async (req, res, next) => {
 
     //Si envías una nueva foto, se borra la anterior de la carpeta uploads:
     if (req.file) {
-      const defaultImagePath = path.join("uploads", "imagenPredeterminada.jpg");
+      const defaultImagePath = path.join(
+        "src",
+        "uploads",
+        "imagenPredeterminada.jpg"
+      );
       const currentImagePath = path.join("src", "uploads", profilePicture);
 
-      if (profilePicture && currentImagePath !== defaultImagePath) {
-        try {
-          await fs.promises.access(currentImagePath);
-
+      try {
+        // Si la imagen actual no es la predeterminada, intenta borrarla
+        if (currentImagePath && currentImagePath !== defaultImagePath) {
+          // await fs.promises.access(currentImagePath);
           await fs.unlink(currentImagePath);
-        } catch (error) {
-          // next(error);
-          console.log("Aquí");
         }
+      } catch (error) {
+        console.error(
+          "Error al acceder o eliminar la imagen actual:",
+          error.message
+        );
       }
 
       profilePicture = req.file.filename;
