@@ -49,6 +49,7 @@ const patchProfileController = async (req, res, next) => {
       name,
       email,
       password,
+      biography,
     };
     // Validamos con Joi...
     const { error } = Joi.object(validationSchemaRegister).validate(

@@ -4,7 +4,7 @@ const validationSchemaRegister = {
   name: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  validatedBio: Joi.string().min(10).max(255),
+  biography: Joi.string().min(10).max(255),
 };
 
 const validationSchemaLogin = {
