@@ -33,6 +33,11 @@ const createLinkController = async (req, res, next) => {
       data: {
         id: insertId,
         message: "Has compartido un enlace!👌",
+        data: {
+          url,
+          title,
+          description,
+        },
       },
     });
   } catch (error) {
