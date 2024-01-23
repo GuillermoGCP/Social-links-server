@@ -77,6 +77,10 @@ const patchProfileController = async (req, res, next) => {
       status: "Ok",
       data: {
         message: "Datos actualizados correctamente",
+        name,
+        email,
+        profilePicture,
+        biography,
       },
     });
   } catch (error) {
