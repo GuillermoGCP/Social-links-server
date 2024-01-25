@@ -81,6 +81,7 @@ const patchProfileController = async (req, res, next) => {
         email,
         profilePicture,
         biography,
+        password,
       },
     });
   } catch (error) {
