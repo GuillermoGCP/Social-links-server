@@ -82,6 +82,7 @@ const patchProfileController = async (req, res, next) => {
         profilePicture,
         biography,
         hashedPassword,
+        userId,
       },
     });
   } catch (error) {
