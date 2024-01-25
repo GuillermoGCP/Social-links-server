@@ -33,22 +33,22 @@ const voteLinkController = async (req, res, next) => {
     const ratingsData = await selectRatings(loggedUserId, linkId);
     if (ratingsData) {
       await updateRating(rating, ratingsData.id);
+      const updatedLink = await selectLinkById(linkId);
       res.send({
         status: "ok",
-        data: {
-          message: `Has actualizado el rating del link ${linkId} con la puntuación: ${rating}`,
-        },
+        message: `Has actualizado el rating del link ${linkId} con la puntuación: ${rating}`,
+        data: updatedLink,
       });
       return;
     }
     //****************************************************/
 
     await voteLink(loggedUserId, linkId, rating);
+    const updatedLink = await selectLinkById(linkId);
     res.send({
       status: "ok",
-      data: {
-        message: `Has votado el link ${linkId} con un ${rating}`,
-      },
+      message: `Has votado el link ${linkId} con un ${rating}`,
+      data: updatedLink,
     });
   } catch (error) {
     next(error);
