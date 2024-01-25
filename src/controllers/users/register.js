@@ -39,7 +39,7 @@ const register = async (req, res, next) => {
 
     res.status(201).send({
       message: "Registro completado con éxito",
-      data: { id: insertId, name, email },
+      data: { id: insertId, name, email, password },
     });
   } catch (error) {
     next(error);
