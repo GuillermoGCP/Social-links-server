@@ -18,11 +18,8 @@ const deleteLinkController = async (req, res, next) => {
     await deleteLink(linkId);
     res.send({
       status: "ok",
-      data: {
-        id: link.id,
-        message: "El link se ha borrado",
-      },
-
+      message: "El link se ha borrado",
+      link,
     });
   } catch (error) {
     next(error);
