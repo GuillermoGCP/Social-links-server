@@ -38,6 +38,7 @@ const voteLinkController = async (req, res, next) => {
         status: "ok",
         message: `Has actualizado el rating del link ${linkId} con la puntuación: ${rating}`,
         data: updatedLink,
+        rating,
       });
       return;
     }
