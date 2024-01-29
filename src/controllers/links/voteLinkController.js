@@ -50,6 +50,7 @@ const voteLinkController = async (req, res, next) => {
       status: "ok",
       message: `Has votado el link ${linkId} con un ${rating}`,
       data: updatedLink,
+      rating,
     });
   } catch (error) {
     next(error);
