@@ -2,7 +2,7 @@ import { seeLinksToday } from "../../models/links/index.js";
 
 const seeLinksTodayController = async (req, res, next) => {
   try {
-    const links = await seeLinksToday();
+    const links = await seeLinksToday(req.auth?.id);
     if (Array.isArray(links) && links.length === 0) {
       res.send({
         status: "ok",
