@@ -7,10 +7,12 @@ import {
   login,
   register,
   patchProfileController,
+  resetPassController,
 } from "../controllers/users/index.js";
 
 import { validateAuth } from "../middlewares/index.js";
 import express from "express";
+import checkPass from "../controllers/pass/checkPass.js";
 
 const router = express.Router();
 const upload = multer({ storage: storage, limits, fileFilter });
@@ -18,6 +20,9 @@ const upload = multer({ storage: storage, limits, fileFilter });
 // Rutas:
 router.post("/login", login);
 router.post("/register", register);
+
+router.post("/resetPass", resetPassController);
+router.post("/checkPass", checkPass);
 
 //Ruta para Editar el perfil:
 router.patch(

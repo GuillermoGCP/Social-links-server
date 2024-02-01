@@ -46,6 +46,16 @@ const createDb = async () => {
             modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
         );
         `);
+    await pool.query(`
+        CREATE TABLE temporaryToken (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            token VARCHAR(255) NOT NULL,
+            userId INT NOT NULL,
+            FOREIGN KEY (userId) REFERENCES users(id),
+            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+            modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
+        );
+        `);
 
     console.log("Tablas de base de datos creada exitosamente");
   } catch (error) {
