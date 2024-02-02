@@ -8,6 +8,7 @@
     Instalar o borrar base de datos:
     npm run deleteDb
     npm run initDb
+    Para recibir correos electrónicos instalar Ethereal Email
 
 # Rutas accesibles:
 
