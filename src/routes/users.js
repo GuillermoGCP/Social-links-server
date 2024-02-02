@@ -1,13 +1,13 @@
 import multer from "multer";
 
 import { storage, limits, fileFilter } from "../utils/index.js";
-
+import deleteTokenController from "../controllers/pass/deleteTokenController.js";
+import resetPassController from "../controllers/pass/resetPassController.js";
 import {
   getProfile,
   login,
   register,
   patchProfileController,
-  resetPassController,
 } from "../controllers/users/index.js";
 
 import { validateAuth } from "../middlewares/index.js";
@@ -22,7 +22,8 @@ router.post("/login", login);
 router.post("/register", register);
 
 router.post("/resetPass", resetPassController);
-router.post("/checkPass", checkPass);
+router.get("/checkPass/:token", checkPass);
+router.post("/deleteToken", deleteTokenController);
 
 //Ruta para Editar el perfil:
 router.patch(

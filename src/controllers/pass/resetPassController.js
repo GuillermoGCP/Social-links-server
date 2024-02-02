@@ -8,31 +8,29 @@ const resetPassController = async (req, res, next) => {
     const { email } = req.body;
     const userDb = await selectUserByEmail(email);
     if (!userDb) {
-      generateError("Credenciales inválidas", 400);
+      generateError("No se encuentra el correo electrónico", 400);
     }
-
-    // const emailSubject = "Recupera tu contraseña";
-    // const bodyMail = `Pincha en este link para recuperar tu contraseña: https://acortar.link/tBdJJx`;
-
-    // await sendMailUtil(email, emailSubject, bodyMail);
 
     const jwtPayload = { id: userDb.id };
 
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    
+
     await saveToken(token, userDb.id);
-    // El token se enviaría por correo electrónico como parámetro de la url, pero como estamos trabajando en un servidor local y no tenemos acceso desde fuera, lo enviamos directamente en el res.send
+
+    const emailSubject = "Recupera tu contraseña";
+
+    const bodyMail = `Copia el siguiente enlace en tu navegador para restablecer su contraseña: 
+    "${process.env.URL_FRONTEND}/resetPassword2/${token}"`;
+
+    await sendMailUtil(email, emailSubject, bodyMail);
+
     res.send({
       status: "Ok",
-      user: userDb,
-      message: "¡Resetea tu Contraseña!",
-      token: token,
-      id: userDb.id,
+      message: "¡Comprueba tu correo electrónico!",
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

@@ -19,7 +19,6 @@ const seeAllLinksController = async (req, res, next) => {
         links: links,
       },
     });
-    console.log(links);
   } catch (error) {
     next(error);
   }
