@@ -22,7 +22,7 @@ const resetPassController = async (req, res, next) => {
     const emailSubject = "Recupera tu contraseña";
 
     const bodyMail = `Copia el siguiente enlace en tu navegador para restablecer su contraseña: 
-    "${process.env.URL_FRONTEND}/resetPassword2/${token}"`;
+    "${process.env.URL_FRONTEND}/resetPassword/${token}"`;
 
     await sendMailUtil(email, emailSubject, bodyMail);
 
