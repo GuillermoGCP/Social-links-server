@@ -15,8 +15,8 @@ const validationSchemaLogin = {
 //Esquema para links:
 const schema = Joi.object({
   url: Joi.string().uri().required(),
-  title: Joi.string().required(),
-  description: Joi.string().required(),
+  title: Joi.string().max(24).required(),
+  description: Joi.string().max(255).required(),
 });
 
 //Validar voto de link:
