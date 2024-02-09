@@ -56,6 +56,18 @@ const createDb = async () => {
             modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
         );
         `);
+    await pool.query(`
+        CREATE TABLE commentsTable (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            userId INT NOT NULL,
+            linkId INT NOT NULL,
+            comment VARCHAR(255) NOT NULL,
+            FOREIGN KEY (userId) REFERENCES users(id),
+            FOREIGN KEY (linkId) REFERENCES links(id),
+            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+            modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
+        );
+        `);
 
     console.log("Tablas de base de datos creada exitosamente");
   } catch (error) {

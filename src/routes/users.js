@@ -21,6 +21,7 @@ const upload = multer({ storage: storage, limits, fileFilter });
 router.post("/login", login);
 router.post("/register", register);
 
+//Rutas para recuperar la contraseña:
 router.post("/resetPass", resetPassController);
 router.get("/checkPass/:token", checkPass);
 router.post("/deleteToken", deleteTokenController);
