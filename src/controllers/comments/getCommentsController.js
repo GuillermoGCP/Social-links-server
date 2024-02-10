@@ -1,8 +1,8 @@
 import { getComments } from "../../models/comments/index.js";
 const getCommentsController = async (req, res, next) => {
   try {
-    const comments = await getComments();
-    console.log(comments);
+    const { linkId } = req.params;
+    const comments = await getComments(linkId);
     if (!comments) {
       res.send({
         status: "ok",
@@ -14,10 +14,8 @@ const getCommentsController = async (req, res, next) => {
     }
     res.send({
       status: "ok",
-      data: {
-        message: "Estos son todos los comentarios publicados",
-        comments: comments,
-      },
+      message: "Estos son todos los comentarios publicados",
+      comments,
     });
   } catch (error) {
     next(error);

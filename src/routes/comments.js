@@ -10,7 +10,7 @@ const router = express.Router();
 //Ruta para crear un comentario:
 router.post("/comments", validateAuth, createCommentController);
 
-//Ruta para traer todos los comentarios:
-router.post("/comments/get", validateAuth, getCommentsController);
+//Ruta para traer los comentarios por id del link:
+router.get("/comments/:linkId", validateAuth, getCommentsController);
 
 export default router;

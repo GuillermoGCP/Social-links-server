@@ -12,8 +12,9 @@ const validationSchemaLogin = {
   password: Joi.string().min(6).required(),
 };
 
+//Esquema para los comentarios:
 const validationComment = {
-  comment: Joi.string().min(10).max(255),
+  comment: Joi.string().min(10).max(500),
 };
 
 //Esquema para links:
