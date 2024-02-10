@@ -12,6 +12,11 @@ const validationSchemaLogin = {
   password: Joi.string().min(6).required(),
 };
 
+//Esquema para los comentarios:
+const validationComment = {
+  comment: Joi.string().min(10).max(500),
+};
+
 //Esquema para links:
 const schema = Joi.object({
   url: Joi.string().uri().required(),
@@ -28,4 +33,5 @@ export {
   validatedRating,
   validationSchemaRegister,
   validationSchemaLogin,
+  validationComment,
 };

@@ -7,7 +7,7 @@ import { join } from "path";
 
 //Importaciones propias:
 import { manageError, notFound } from "./middlewares/index.js";
-import { linkRouters, userRouters } from "./routes/index.js";
+import { linkRouters, userRouters, commentsRouter } from "./routes/index.js";
 
 //Express:
 const app = express();
@@ -24,6 +24,7 @@ app.use("/uploads", express.static(ruta));
 //Rutas:
 app.use(userRouters);
 app.use(linkRouters);
+app.use(commentsRouter);
 
 //Middlewares
 app.use(notFound);
