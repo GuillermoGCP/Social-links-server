@@ -12,6 +12,7 @@ const getCommentsController = async (req, res, next) => {
       });
       return;
     }
+
     res.send({
       status: "ok",
       message: "Estos son todos los comentarios publicados",

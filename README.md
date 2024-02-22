@@ -34,6 +34,14 @@
         rating
     /links/:linkId (delete) para borrar un link.
 
+    Comentarios:
+    /comments (post) para crear un comentario.
+    comment.
+
+    /comments/response (post) para responder a los comentarios
+    comment.
+    /comments/:linkId (get) para traer los comentarios
+
 
     *Creadores: Guillermo Cerviño Porto, Ruth Villa Valeiro,
     Louis del Saz y Rosdany Guerra.

@@ -62,8 +62,10 @@ const createDb = async () => {
             userId INT NOT NULL,
             linkId INT NOT NULL,
             comment VARCHAR(255) NOT NULL,
+            parent_comment_id INT,
             FOREIGN KEY (userId) REFERENCES users(id),
             FOREIGN KEY (linkId) REFERENCES links(id),
+            FOREIGN KEY (parent_comment_id) REFERENCES commentsTable(id) ON DELETE CASCADE,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
         );

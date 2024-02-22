@@ -36,6 +36,7 @@ const createCommentController = async (req, res, next) => {
         modifiedAta: commentData[0].modifiedAt,
         name: user.name,
         profilePicture: user.profilePicture,
+        parent_comment_id: null,
       },
     });
   } catch (error) {

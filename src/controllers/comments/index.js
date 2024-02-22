@@ -1,3 +1,4 @@
 import createCommentController from "./createCommentController.js";
 import getCommentsController from "./getCommentsController.js";
-export { createCommentController, getCommentsController };
+import responseToAComent from "./responseToAComent.js";
+export { createCommentController, getCommentsController, responseToAComent };
