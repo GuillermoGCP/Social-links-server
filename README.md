@@ -40,7 +40,7 @@
 
     /comments/response (post) para responder a los comentarios
     comment.
-    /comments/:linkId (get) para traer los comentarios
+    /comments/:linkId (get) para traer los comentarios de un link
 
 
     *Creadores: Guillermo Cerviño Porto, Ruth Villa Valeiro,
