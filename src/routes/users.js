@@ -2,12 +2,14 @@ import multer from "multer";
 
 import { storage, limits, fileFilter } from "../utils/index.js";
 import deleteTokenController from "../controllers/pass/deleteTokenController.js";
+
 import resetPassController from "../controllers/pass/resetPassController.js";
 import {
   getProfile,
   login,
   register,
   patchProfileController,
+  deleteUserController,
 } from "../controllers/users/index.js";
 
 import { validateAuth } from "../middlewares/index.js";
@@ -37,4 +39,6 @@ router.patch(
 //Ruta visualizar perfil y links propios
 router.get("/profile", validateAuth, getProfile);
 
+//Ruta para borrar cuenta:
+router.delete("/profile", validateAuth, deleteUserController);
 export default router;
