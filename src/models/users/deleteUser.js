@@ -34,7 +34,7 @@ const deleteUser = async (userId) => {
   );
   //Eliminar referencias en la tabla userLinks:
   await pool.query(
-    "DELETE FROM userlink WHERE linkId IN (SELECT id FROM links WHERE ownerId = ?)",
+    "DELETE FROM userLink WHERE linkId IN (SELECT id FROM links WHERE ownerId = ?)",
     [userId]
   );
 
