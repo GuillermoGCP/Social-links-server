@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const validationSchemaRegister = {
-  name: Joi.string().min(10).required(),
+  name: Joi.string().max(10).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   biography: Joi.string().min(10).max(255),
