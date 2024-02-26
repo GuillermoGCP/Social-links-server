@@ -25,7 +25,13 @@ const responseToAComent = async (req, res, next) => {
     //Datos del link y usuario padre:
     const [parentComment] = await getCommentById(parent_comment_id);
     const parentUser = await selectUserById(parentComment.userId);
-    const comments = await getComments(linkId);
+    const commentsFromModel = await getComments(linkId);
+    let comments =
+      commentsFromModel &&
+      commentsFromModel.map((response) => {
+        const parseResponses = JSON.parse(response.responses);
+        return { ...response, parseResponses };
+      });
     res.send({
       status: "ok",
       message: `Has respondido al comentario de ${parentUser.name}`,
