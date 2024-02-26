@@ -2,8 +2,8 @@ import { getComments } from "../../models/comments/index.js";
 const getCommentsController = async (req, res, next) => {
   try {
     const { linkId } = req.params;
-    const comments = await getComments(linkId);
-    if (!comments) {
+    const commentsFromModel = await getComments(linkId);
+    if (!commentsFromModel) {
       res.send({
         status: "ok",
         data: {
@@ -12,7 +12,12 @@ const getCommentsController = async (req, res, next) => {
       });
       return;
     }
-
+    let comments =
+      commentsFromModel &&
+      commentsFromModel.map((response) => {
+        const parseResponses = JSON.parse(response.responses);
+        return { ...response, parseResponses };
+      });
     res.send({
       status: "ok",
       message: "Estos son todos los comentarios publicados",

@@ -1,5 +1,6 @@
 import pool from "../../db/getPool.js";
 import useDb from "../../db/useDb.js";
+
 const getComments = async (linkId) => {
   await useDb();
   const [comments] = await pool.query(
@@ -9,7 +10,7 @@ const getComments = async (linkId) => {
       u.name , 
       u.profilePicture,
       (
-        SELECT JSON_ARRAYAGG(
+        SELECT CONCAT('[', GROUP_CONCAT(
           JSON_OBJECT(
             'id', r.id,
             'comment', r.comment,
@@ -19,7 +20,8 @@ const getComments = async (linkId) => {
             'name', ru.name,
             'profilePicture', ru.profilePicture
           )
-        )
+          ORDER BY r.id
+        ), ']') AS responses
         FROM commentsTable r
         JOIN users ru ON r.userId = ru.id
         WHERE r.parent_comment_id = c.id
@@ -27,6 +29,7 @@ const getComments = async (linkId) => {
     FROM commentsTable c
     JOIN users u ON c.userId = u.id
     WHERE c.linkId = ?
+    GROUP BY c.id
   `,
     [linkId]
   );
