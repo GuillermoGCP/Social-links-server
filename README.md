@@ -1,6 +1,6 @@
 # Encargo: Proyecto-links. API para compartir enlaces.
 
-    API para compartir enlaces web y votar los de otros usuarios.
+    API creada con Node.js para compartir enlaces web y votar los de otros usuarios.
     Los usuarios solo podrán registrarse y acceder. No hay contenido accesible públicamente.
 
 # Configuración para iniciar la API
